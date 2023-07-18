@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>cccDeskSDK demo22</title>
+    <style>
+      .dis-f {
+        display: flex;
+      }
+      .flex1 {
+        flex: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dis-f">
+      <button onclick="logon()">登录</button>
+      <button onclick="logon()">登出</button>
+      <button onclick="startCall()">外呼</button>
+      <button onclick="hangup()">挂断</button>
+      <button onclick="hangup()">静音</button>
+      <button onclick="hangup()">保持</button>
+      <button onclick="hangup()">取消保持</button>
+      <button onclick="free()">示闲</button>
+      <button onclick="busy()">示忙</button>
+    </div>
+    <script>
+      var cccDeskSdkInstance
+      window.onload = function () {
+        console.log(cccDeskSDK)
+        // 实例化
+        cccDeskSdkInstance = new cccDeskSDK({
+          options: {
+            seatName: '2011@CSZHL', //坐席名称 *必填
+            seatPassword_MD5: 'e10adc3949ba59abbe56e057f20f883e', // 坐席密码，MD5加密32位小写*必填
+            // wsUrl: 'wss://dev.arccocc.com/ws',
+            wsUrl: 'ws://192.168.110.69:8084/ws',
+            extraOpts: {}
+          }
+        }).init()
+        console.log(cccDeskSdkInstance)
+        cccDeskSdkInstance.getStatus(function (status) {
+          console.log('ws-当前状态：' + status.name, status)
+        })
+      }
+      function startCall() {
+        cccDeskSdkInstance.request('startCall', { called: 18801117319 })
+      }
+      function hangup() {
+        cccDeskSdkInstance.request('hangup')
+      }
+    </script>
+  </body>
+</html>
